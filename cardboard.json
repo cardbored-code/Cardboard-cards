@@ -1,0 +1,17 @@
+{
+	"id": "cardboard_cards",
+	"name": "Cardboard Cards",
+	"display_name": "Cardboard Cards",
+	"author": ["Cardboard :3"],
+	"description": "My first balala mod ples rate it 5 out of 5 on meh github repository",
+	"prefix": "cardboard",
+	"main_file": "cardboard.lua",
+	"priority": 0,
+	"badge_colour": "7434eb",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.1.0",
+	"dependencies": [
+        "Steamodded (>=1.*)",
+		"Lovely (>=0.7)"
+    ]
+}
