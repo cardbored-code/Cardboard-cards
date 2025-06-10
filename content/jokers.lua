@@ -606,6 +606,43 @@ SMODS.Joker{
     end
 }
 
+--A Piece of Cardboard
+SMODS.Joker{
+    key = "cardboard_piece_joker",
+    loc_txt = {
+        name = "A Piece of Cardboard",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult",
+            "{C:attention,E:1}placeholder function :3{}"
+        }
+    },
+    atlas = "Jokers",
+    rarity = 2, --rarity: 1 = Common, 2 = Uncommon, 3 = Rare, 4 = Legendary
+    cost = 6,
+    unlocked = true, --where it is unlocked or not: if true, 
+    discovered = true, --whether or not it starts discovered
+    blueprint_compat = true, --can it be blueprinted/brainstormed/other
+    eternal_compat = true, --can it be eternal
+    perishable_compat = true, --can it be perishable
+    pos = {x = 5, y = 1}, --position in atlas, starts at 0, scales by the atlas' card size (px and py): {x = 1, y = 0} would mean the sprite is 71 pixels to the right
+    config = { extra = {
+        Xmult = 3
+    }},
+    loc_vars = function(self,info_queue,card)
+        return {vars = {card.ability.extra.Xmult}}
+    end,
+    calculate = function(self,card,context)
+        if context.joker_main then 
+            return {
+                card = card,
+                Xmult_mod = card.ability.extra.Xmult,
+                message = "X" .. card.ability.extra.Xmult,
+                colour = G.C.MULT
+            }
+        end
+    end
+}
+
 --Everyone Ping
 SMODS.Joker{
     key = "discord_everyone_joker",
