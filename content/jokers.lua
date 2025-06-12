@@ -612,33 +612,45 @@ SMODS.Joker{
     loc_txt = {
         name = "A Piece of Cardboard",
         text = {
-            "{X:mult,C:white}X#1#{} Mult",
-            "{C:attention,E:1}placeholder function :3{}"
+            "{X:mult,C:white}X#1#{} Mult OR",
+            "{C:chips}+#2#{} Chips OR",
+            "{C:mult}+#3#{} Mult"
         }
     },
     atlas = "Jokers",
-    rarity = 2, --rarity: 1 = Common, 2 = Uncommon, 3 = Rare, 4 = Legendary
-    cost = 6,
+    rarity = 1, --rarity: 1 = Common, 2 = Uncommon, 3 = Rare, 4 = Legendary
+    cost = 5,
     unlocked = true, --where it is unlocked or not: if true, 
     discovered = true, --whether or not it starts discovered
     blueprint_compat = true, --can it be blueprinted/brainstormed/other
     eternal_compat = true, --can it be eternal
     perishable_compat = true, --can it be perishable
-    pos = {x = 5, y = 1}, --position in atlas, starts at 0, scales by the atlas' card size (px and py): {x = 1, y = 0} would mean the sprite is 71 pixels to the right
+    pos = {x = 5, y = 1}, 
     config = { extra = {
-        Xmult = 3
+        Xmult = 1.5,
+        chips = 80,
+        mult = 8
     }},
     loc_vars = function(self,info_queue,card)
-        return {vars = {card.ability.extra.Xmult}}
+        return {vars = {card.ability.extra.Xmult, card.ability.extra.chips, card.ability.extra.mult}}
     end,
     calculate = function(self,card,context)
         if context.joker_main then 
-            return {
-                card = card,
-                Xmult_mod = card.ability.extra.Xmult,
-                message = "X" .. card.ability.extra.Xmult,
-                colour = G.C.MULT
-            }
+            if math.random(0,2) == 1 then
+                return {
+                    chips = card.ability.extra.chips
+                }
+
+            elseif math.random(0,2) == 2 then
+                return {
+                    mult = card.ability.extra.mult
+                }
+                
+            else
+                return {
+                    Xmult = card.ability.extra.Xmult
+                }
+            end
         end
     end
 }
