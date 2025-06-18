@@ -446,7 +446,7 @@ SMODS.Joker{
         name = "Integer Overflow",
         text = {
             --"{X:mult,C:white}:#1#{} Mult"
-            "Gives a {C:red}Rare Tag{} at end of round",
+            "Gives a {C:red,T:tag_rare}Rare Tag{} at end of round",
             "if round score is over {C:red}twice{} the blind score"
         }
     },
