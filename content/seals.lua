@@ -12,6 +12,7 @@ SMODS.Seal{
     atlas = "Seals",
     pos = {x = 1, y = 0},
     config = {x_chips = 1.5},
+    discovered = true,
     loc_txt = {
         label = "Blue Peg",
         -- Tooltip description
@@ -42,6 +43,7 @@ SMODS.Seal{
     atlas = "Seals",
     pos = {x = 0, y = 0},
     config = {x_mult = 1, x_mult_gain = 0.2},
+    discovered = true,
     loc_txt = {
         label = "Orange Peg",
         -- Tooltip description
