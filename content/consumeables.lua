@@ -20,6 +20,7 @@ SMODS.Consumable {
             "{C:attention}King of Hearts{}"
         }
     },
+    cost = 4,
     discovered = true,      -- Mark as discovered.
     unlocked = true,        -- Available by default.
     config = {},
@@ -70,6 +71,7 @@ SMODS.Consumable {
             "{C:inactive,s:0.8}(e.g. a 3 gives $3, Kings give $10 etc.)"
         }
     },
+    cost = 4,
     discovered = true,      -- Mark as discovered.
     unlocked = true,        -- Available by default.
     config = {},
