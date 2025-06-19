@@ -7,7 +7,7 @@ SMODS.Atlas{
 
 SMODS.Seal{
     name = "Blue Peg",
-    key = "blue_peg_seal",
+    key = "blue_peg",
     badge_colour = HEX("3773ed"),
     atlas = "Seals",
     pos = {x = 1, y = 0},
@@ -36,9 +36,45 @@ SMODS.Seal{
     end
 }
 
+--Score
+SMODS.Consumable {
+    key = 'score',
+    set = 'Spectral',
+    atlas = "Spectrals",
+    object_type = "Consumable",
+    pos = { x = 0, y = 0 },
+    loc_txt = {
+        name = "Score",
+        text = {
+            "Add a {C:blue}Blue Peg{}",
+            "to {C:attention}1{} selected",
+            "card in your hand"
+        }
+    },
+    cost = 4,
+    discovered = true,      -- Mark as discovered.
+    unlocked = true,        -- Available by default.
+    config = {max_highlighted = 1},
+    use = function(self, card, area, copier)
+        for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
+            G.E_MANAGER:add_event(Event({func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true end }))
+            
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+                G.hand.highlighted[i]:set_seal("cardboard_blue_peg", nil, true)
+                return true end }))
+            
+            delay(0.5)
+        end
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
+    end
+}
+
 SMODS.Seal{
     name = "Orange Peg",
-    key = "orange_peg_seal",
+    key = "orange_peg",
     badge_colour = HEX("eb7a34"),
     atlas = "Seals",
     pos = {x = 0, y = 0},
@@ -67,5 +103,44 @@ SMODS.Seal{
                 x_mult = card.ability.seal.x_mult
             }
         end
+    end
+}
+
+--Fever
+SMODS.Consumable {
+    key = 'fever',
+    set = 'Spectral',
+    atlas = "Spectrals",
+    object_type = "Consumable",
+    pos = { x = 1, y = 0 },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {colours = {HEX("eb7a34")}}}
+    end,
+    loc_txt = {
+        name = "Fever",
+        text = {
+            "Add a {V:1}Orange Peg{}",
+            "to {C:attention}1{} selected",
+            "card in your hand"
+        }
+    },
+    cost = 4,
+    discovered = true,      -- Mark as discovered.
+    unlocked = true,        -- Available by default.
+    config = {max_highlighted = 1},
+    use = function(self, card, area, copier)
+        for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
+            G.E_MANAGER:add_event(Event({func = function()
+                play_sound('tarot1')
+                card:juice_up(0.3, 0.5)
+                return true end }))
+            
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+                G.hand.highlighted[i]:set_seal("cardboard_orange_peg", nil, true)
+                return true end }))
+            
+            delay(0.5)
+        end
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
     end
 }
