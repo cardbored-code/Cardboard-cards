@@ -76,3 +76,42 @@ SMODS.Back{
         }))
     end
 }
+
+SMODS.Back{
+    name = "Night Deck",
+    key = "night",
+    atlas = 'Decks',
+    pos = {x = 2, y = 0},
+    config = {},
+    loc_txt = {
+        name ="Night Deck",
+        text={
+            "Jokers are 200x more likely",
+            "to become {C:attention,T:e_negative}Negative{}"
+        },
+    },
+    discovered = true,
+    unlocked = true,
+    apply = function(self)
+        --[[G.E_MANAGER:add_event(Event({
+            func = function()
+                local card = SMODS.create_card({
+                    set = 'Joker',
+                    area = G.jokers,
+                    key = 'j_cardboard_evil_goober_joker',
+                })
+                card:add_to_deck()
+                G.jokers:emplace(card)
+                card:set_eternal(true)
+                return true
+            end
+        })) ]]
+        
+        --negative chance code based off of cryptid
+        SMODS.Edition:take_ownership("negative", {
+			get_weight = function(self)
+				return self.weight * 200
+			end,
+		}, true)
+    end,
+}
