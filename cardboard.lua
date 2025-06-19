@@ -2,7 +2,8 @@
 local mod_contents = {
     "jokers",
     "decks",
-	"consumeables"
+	"consumeables",
+	"seals"
 }
 
 --load mod files
