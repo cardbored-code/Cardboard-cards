@@ -42,7 +42,7 @@ SMODS.Consumable {
     set = 'Spectral',
     atlas = "Spectrals",
     object_type = "Consumable",
-    pos = { x = 0, y = 0 },
+    pos = { x = 2, y = 0 },
     loc_txt = {
         name = "Score",
         text = {
