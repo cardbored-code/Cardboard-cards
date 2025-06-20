@@ -36,42 +36,6 @@ SMODS.Seal{
     end
 }
 
---Score
-SMODS.Consumable {
-    key = 'score',
-    set = 'Spectral',
-    atlas = "Spectrals",
-    object_type = "Consumable",
-    pos = { x = 2, y = 0 },
-    loc_txt = {
-        name = "Score",
-        text = {
-            "Add a {C:blue}Blue Peg{}",
-            "to {C:attention}1{} selected",
-            "card in your hand"
-        }
-    },
-    cost = 4,
-    discovered = true,      -- Mark as discovered.
-    unlocked = true,        -- Available by default.
-    config = {max_highlighted = 1},
-    use = function(self, card, area, copier)
-        for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
-            G.E_MANAGER:add_event(Event({func = function()
-                play_sound('tarot1')
-                card:juice_up(0.3, 0.5)
-                return true end }))
-            
-            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
-                G.hand.highlighted[i]:set_seal("cardboard_blue_peg", nil, true)
-                return true end }))
-            
-            delay(0.5)
-        end
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
-    end
-}
-
 SMODS.Seal{
     name = "Orange Peg",
     key = "orange_peg",
@@ -106,20 +70,18 @@ SMODS.Seal{
     end
 }
 
---Fever
+
+--Score
 SMODS.Consumable {
-    key = 'fever',
+    key = 'score',
     set = 'Spectral',
     atlas = "Spectrals",
     object_type = "Consumable",
-    pos = { x = 1, y = 0 },
-    loc_vars = function(self, info_queue, card)
-        return {vars = {colours = {HEX("eb7a34")}}}
-    end,
+    pos = { x = 2, y = 0 },
     loc_txt = {
-        name = "Fever",
+        name = "Score",
         text = {
-            "Add a {V:1}Orange Peg{}",
+            "Add a {C:green,E:2}random Peg{}",
             "to {C:attention}1{} selected",
             "card in your hand"
         }
@@ -129,6 +91,11 @@ SMODS.Consumable {
     unlocked = true,        -- Available by default.
     config = {max_highlighted = 1},
     use = function(self, card, area, copier)
+        local pegs = {
+            "cardboard_blue_peg",
+            "cardboard_orange_peg"
+        }
+
         for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
             G.E_MANAGER:add_event(Event({func = function()
                 play_sound('tarot1')
@@ -136,7 +103,7 @@ SMODS.Consumable {
                 return true end }))
             
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
-                G.hand.highlighted[i]:set_seal("cardboard_orange_peg", nil, true)
+                G.hand.highlighted[i]:set_seal(pseudorandom_element(pegs, pseudoseed('score')), nil, true)
                 return true end }))
             
             delay(0.5)
@@ -144,3 +111,5 @@ SMODS.Consumable {
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2,func = function() G.hand:unhighlight_all(); return true end }))
     end
 }
+
+
