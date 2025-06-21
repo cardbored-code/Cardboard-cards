@@ -55,7 +55,7 @@ SMODS.Seal{
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.seal.x_mult, self.config.x_mult_gain} }
+        return { vars = {self.config.x_mult, self.config.x_mult_gain} }
     end,
     -- self - this seal prototype
     -- card - card this seal is applied to
@@ -70,6 +70,69 @@ SMODS.Seal{
     end
 }
 
+SMODS.Seal{
+    name = "Green Peg",
+    key = "green_peg",
+    badge_colour = HEX("13d139"),
+    atlas = "Seals",
+    pos = {x = 2, y = 0},
+    config = {},
+    discovered = true,
+    loc_txt = {
+        label = "Green Peg",
+        -- Tooltip description
+        name = 'Green Peg',
+        text = {
+            "Creates a random {C:rare}Rare{} Joker",
+            "when discarded",
+            "{C:inactive}(Must have room){}"
+        }
+    },
+    -- self - this seal prototype
+    -- card - card this seal is applied to
+    calculate = function(self, card, context)
+        -- main_scoring context is used whenever the card is scored
+        if context.discard and context.other_card == card then
+            SMODS.add_card({set = "Joker", rarity = "Rare"})
+            return { message = "Magic Power", colour = G.C.GREEN }
+        end
+    end
+}
+
+SMODS.Seal{
+    name = "Purple Peg",
+    key = "purple_peg",
+    badge_colour = HEX("990fd4"),
+    atlas = "Seals",
+    pos = {x = 3, y = 0},
+    config = {chips = 75, mult = 25, dollars = 5},
+    discovered = true,
+    loc_txt = {
+        label = "Purple Peg",
+        -- Tooltip description
+        name = 'Purple Peg',
+        text = {
+            "{C:chips}+#1#{} Chips",
+            "{C:mult}+#2#{} Mult",
+            "{C:money}+$#3#{}"
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {self.config.chips, self.config.mult, self.config.dollars} }
+    end,
+    -- self - this seal prototype
+    -- card - card this seal is applied to
+    calculate = function(self, card, context)
+        -- main_scoring context is used whenever the card is scored
+        if context.main_scoring and context.cardarea == G.play then
+            return {
+                chips = self.config.chips,
+                mult = self.config.chips,
+                dollars = self.config.dollars
+            }
+        end
+    end
+}
 
 --Score
 SMODS.Consumable {
@@ -93,7 +156,9 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         local pegs = {
             "cardboard_blue_peg",
-            "cardboard_orange_peg"
+            "cardboard_orange_peg",
+            "cardboard_green_peg",
+            "cardboard_purple_peg",
         }
 
         for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
