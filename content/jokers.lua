@@ -498,7 +498,7 @@ SMODS.Joker{
     perishable_compat = true, --can it be perishable
     pos = {x = 2, y = 1}, --position in atlas, starts at 0, scales by the atlas' card size (px and py): {x = 1, y = 0} would mean the sprite is 71 pixels to the right
     config = { extra = {
-        money = 6
+        money = 9
     }},
     loc_vars = function(self,info_queue,center)
         return {vars = {center.ability.extra.money}}
