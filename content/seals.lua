@@ -55,7 +55,7 @@ SMODS.Seal{
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {self.config.x_mult, self.config.x_mult_gain} }
+        return { vars = {updated_xmult or 1, self.config.x_mult_gain} }
     end,
     -- self - this seal prototype
     -- card - card this seal is applied to
@@ -63,6 +63,7 @@ SMODS.Seal{
         -- main_scoring context is used whenever the card is scored
         if context.main_scoring and context.cardarea == G.play then
             card.ability.seal.x_mult = card.ability.seal.x_mult + self.config.x_mult_gain
+            updated_xmult = card.ability.seal.x_mult
             return {
                 x_mult = card.ability.seal.x_mult
             }
