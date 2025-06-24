@@ -87,7 +87,9 @@ SMODS.Back{
         name ="Night Deck",
         text={
             "Jokers are 200x more likely",
-            "to become {C:attention,T:e_negative}Negative{}"
+            "to become {C:attention,T:e_negative}Negative{}",
+            "{C:inactive}effect stays until restart, this is a bug",
+            "{C:inactive}and will be fixed"
         },
     },
     discovered = true,
