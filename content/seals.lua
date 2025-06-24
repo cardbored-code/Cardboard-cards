@@ -127,7 +127,7 @@ SMODS.Seal{
         if context.main_scoring and context.cardarea == G.play then
             return {
                 chips = self.config.chips,
-                mult = self.config.chips,
+                mult = self.config.mult,
                 dollars = self.config.dollars
             }
         end
