@@ -22,5 +22,5 @@ Jokers and other things that are known to be incompatible with a specific mod ri
 
 ***How much content is planned to be added to this mod?***
 
-I don't have high hopes for this project to grow as big as Cryptid or Almanac, so my goals right now are to have at least 25 jokers and more than two consumables lol.
+I don't have high hopes for this project to grow as big as Cryptid, so my goals right now are to have at least 25 jokers and more than two consumables lol.
 I do hope this project reaches 1.0 someday.
