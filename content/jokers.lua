@@ -698,3 +698,37 @@ SMODS.Joker{
         end
     end
 }
+
+SMODS.Joker {
+	key = 'sticky_note_joker',
+	loc_txt = {
+		name = 'Sticky Note',
+		text = {
+			"{C:green}1 in 2{} chance to retrigger",
+			"played {C:diamonds}Diamond{} cards"
+		}
+	},
+	config = { extra = { repetitions = 1 } },
+	rarity = 2,
+	atlas = 'Jokers',
+	pos = { x = 1, y = 2 },
+	cost = 6,
+	calculate = function(self, card, context)
+        local chance = pseudorandom("stickynote", 1, 2)
+		-- Checks that the current cardarea is G.play, or the cards that have been played, then checks to see if it's time to check for repetition.
+		-- The "not context.repetition_only" is there to keep it separate from seals.
+		if context.cardarea == G.play and context.repetition and not context.repetition_only then
+			-- context.other_card is something that's used when either context.individual or context.repetition is true
+			-- It is each card 1 by 1, but in other cases, you'd need to iterate over the scoring hand to check which cards are there.
+            if chance == 1 then
+                if context.other_card:is_suit("Diamonds") then
+                    return {
+                        repetitions = card.ability.extra.repetitions
+                    }
+                end
+            else
+                return true
+            end
+		end
+	end
+}
