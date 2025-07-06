@@ -700,6 +700,52 @@ SMODS.Joker{
 }
 
 SMODS.Joker {
+	key = 'broken_charger_joker',
+	loc_txt = {
+		name = 'Broken Charger',
+		text = {
+            "{X:mult,C:white}X#3#{} Mult",
+			"{C:green}#1# in #2#{} chance to spontaneously combust into flames",
+			"if played hand sets score {C:attention}on fire{}"
+		}
+	},
+	config = { extra = { 
+        odds = 2,
+        Xmult = 2
+    }},
+	rarity = 1,
+	atlas = 'Jokers',
+	pos = { x = 7, y = 1 },
+	cost = 6,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.Xmult } }
+    end,
+	calculate = function(self, card, context)
+		if context.joker_main then
+            return {
+                Xmult = card.ability.extra.Xmult
+            }
+        end
+
+        if context.final_scoring_step and context.cardarea == G.jokers and not context.blueprint then
+            if hand_chips * mult >= G.GAME.blind.chips then
+                if pseudorandom('broken_charger') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                    --card:start_dissolve() kinda sucks and will trigger before scoring unless i put it in an event
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 1.0,
+	                    func = function()
+	                        card:start_dissolve()
+	                        return true
+	                    end
+	                }))
+                end
+            end
+        end
+	end
+}
+
+SMODS.Joker {
 	key = 'sticky_note_joker',
 	loc_txt = {
 		name = 'Sticky Note',
